@@ -4,6 +4,9 @@ version = "0.1.0"
 description = "Fuse Sheets Handler Application"
 authors = ["Ivanov Cyrill <jcommander13@yandex.ru>"]
 license = "MIT"
+packages = [
+    { include = "fuse_sheets" },
+]
 
 [tool.poetry.dependencies]
 python = ">=3.8,<3.10"

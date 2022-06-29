@@ -1,5 +1,5 @@
-# fuse-app-sheets
-Fuse Sheets Handler Application
+# fuse-sheets
+Fuse Sheets API
 
 Requirements:
 * openpyxl

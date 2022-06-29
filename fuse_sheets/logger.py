@@ -15,13 +15,13 @@ class SheetsLogger:
     """
 
     def __init__(self):
-        self._container_list = []
+        self._logs = []
 
     async def info(self, *keys, items: object = None, comment: str = None):
         await self.record(*keys, comment=comment, items=items, state=SheetsLoggerEnum.INFO)
 
-    async def error(self, *keys, items: object = None, comment: str = None):
-        await self.record(*keys, comment=comment, items=items, state=SheetsLoggerEnum.ERROR)
+    async def error(self, *keys, item: object = None, comment: str = None):
+        await self.record(*keys, comment=comment, items=item, state=SheetsLoggerEnum.ERROR)
 
     async def warning(self, *keys, items: object = None, comment: str = None):
         await self.record(*keys, comment=comment, items=items, state=SheetsLoggerEnum.WARNING)
@@ -52,7 +52,7 @@ class SheetsLogger:
             })
             self._logger.warning(comment)
 
-        self._container_list.append(container)
+        self._logs.append(container)
 
     async def save(self, **kwargs) -> None:
-        pass
+        raise NotImplementedError('method `save` must be implemented')

@@ -1,13 +1,8 @@
 from __future__ import annotations
 
 import logging
-from io import BufferedReader
-
 from aioify import aioify
-from os import path as osp
-from tempfile import NamedTemporaryFile
-
-from typing import Tuple, Awaitable, Union
+from typing import Tuple, Awaitable
 
 from fuse_core.handlers.containers import FuseDictionary
 
@@ -15,6 +10,7 @@ from .logger import SheetsLogger
 from .readers import XLSBTableReader
 from .readers import XlsxSheetReader
 from .exceptions import SheetsFakeError
+from .exceptions import SheetsInlineError
 
 
 class FuseSheetsTask:
@@ -52,27 +48,19 @@ class FuseSheetsTask:
     @aioify
     def prepare(
         self,
-        file: Union[BufferedReader, NamedTemporaryFile],
         file_name: str
     ) -> None:
         """
         Prepare file content, main attributes, `Logger` and `SheetLogger`
         """
         # Check if file is `NamedTemporaryFile`
-        if getattr(file, 'getvalue'):
-            file = file.getvalue()
-            file_format = file_name.name.split('.')[-1]
-        else:
-            file_format = file.split('.')[-1]
-            file_name = osp.basename(file)
-
         self.file_name = file_name
-        self.file_format = file_format
+        self.file_format = file_name.split('.')[-1]
 
         try:
             self.reader = self.file_readers[self.file_format]()
         except KeyError:
-            raise ValueError(f'can\'t handle {self.file_format} file format')
+            raise ValueError(f'can\'t handle {self.file_format} file format (file reader not found)')
 
     @aioify
     def prepare_workbook_sheet(self):
@@ -91,6 +79,7 @@ class FuseSheetsTask:
 
     async def handle(self) -> None:
         workbook_sheet = await self.prepare_workbook_sheet()
+        # temporary until we figure out how to get `max_row` from other file formats
         percent_each = 100 / workbook_sheet.max_row
 
         for index, item in enumerate(await self.iter_sheets(workbook_sheet)):
@@ -100,15 +89,14 @@ class FuseSheetsTask:
             except SheetsFakeError:
                 pass
 
-            except self.exceptions as e:
-                # Set state here
-                await self.sheets_logger.info('sexo')
+            except SheetsInlineError as e:
+                await self.sheets_logger.error(*e.fields, item=item, comment=e.comment)
 
             # Set progress here
             self.logger.warning(f'{self.file_name}: {(index + 1) * round(percent_each)}% / 100%')
 
         # State recorder save here
-        # self.sheets_logger.save(user_id=self.user_id, filename=self.file_name)
+        await self.sheets_logger.save(filename=self.file_name)
 
     async def item_handler(self, item: FuseDictionary) -> None:
-        self.logger.warning(item)
+        raise NotImplementedError('method `item_handler` must be implemented')

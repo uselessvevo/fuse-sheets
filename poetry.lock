@@ -107,7 +107,7 @@ python-dateutil = "^2.8.2"
 type = "git"
 url = "https://github.com/uselessvevo/fuse-core.git"
 reference = "main"
-resolved_reference = "abeda570fecddbc78d360243ac454d86f5c638f1"
+resolved_reference = "1692e70052670e1afe5660207cf4655604d0a886"
 
 [[package]]
 name = "idna"
@@ -192,7 +192,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8,<3.10"
-content-hash = "0b5d874ee74a16a8ce10d15322d43aea76c7d0455d236fbae67c5fddae260191"
+content-hash = "30708103b76701e07642b5644e154e4f2e01346661c8ed648df245f6a089afb3"
 
 [metadata.files]
 aiohttp = [

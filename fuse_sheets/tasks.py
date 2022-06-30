@@ -46,14 +46,10 @@ class FuseSheetsTask:
         self.sheets_logger: SheetsLogger = SheetsLogger()
 
     @aioify
-    def prepare(
-        self,
-        file_name: str
-    ) -> None:
+    def prepare(self, file_name: str) -> None:
         """
         Prepare file content, main attributes, `Logger` and `SheetLogger`
         """
-        # Check if file is `NamedTemporaryFile`
         self.file_name = file_name
         self.file_format = file_name.split('.')[-1]
 

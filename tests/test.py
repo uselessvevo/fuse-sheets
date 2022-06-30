@@ -1,40 +1,49 @@
 import asyncio
-from fuse_core.handlers.fields import Field
+
+from fuse_core.orm.validators import EmailValidator
+
 from fuse_sheets.tasks import FuseSheetsTask
-from fuse_sheets.readers import XlsxSheetReader
+from fuse_core.handlers.fields import Field, IntegerField
 
 
 headers = (
     Field(
         name='firstname',
-        verbose_name='Имя'
+        verbose_name='Firstname'
     ),
     Field(
         name='surname',
-        verbose_name='Фамилия'
+        verbose_name='Surname'
     ),
     Field(
-        name='lastname',
-        verbose_name='Отчество'
+        name='patronymic',
+        verbose_name='Patronymic'
     ),
-    Field(
+    IntegerField(
         name='age',
-        verbose_name='Возраст'
+        verbose_name='Age'
     ),
     Field(
         name='address',
-        verbose_name='Адрес',
-    )
+        verbose_name='Address',
+    ),
+    Field(
+        name='email',
+        verbose_name='Email',
+        validators=[EmailValidator()]
+    ),
 )
 
 
 async def main():
     task = FuseSheetsTask(headers)
-    await task.prepare('../test.xlsx')
+    await task.prepare('test.xlsx')
     await task.handle()
+
     # await asyncio.gather(
     #     *[task.handle() for _ in range(100)],
     # )
+
     # await asyncio.gather(
     #     task.handle(),
     #     task.handle(),

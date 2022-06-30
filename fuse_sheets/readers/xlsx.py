@@ -57,6 +57,7 @@ class XlsxSheetReader(ISheetReader):
                 fuse_dict[field_inst.name] = field_inst
                 try:
                     if isinstance(row, (ReadOnlyCell, EmptyCell)):
+                        field_inst.validate(row.value)
                         field_inst.set(row.value)
 
                 except Exception as e:

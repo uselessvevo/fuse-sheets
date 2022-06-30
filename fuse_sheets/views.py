@@ -2,8 +2,10 @@
 Base mapper class
 """
 from io import BytesIO
-from uuid import uuid4
 from typing import Tuple
+
+from uuid import uuid4
+from cgi import FieldStorage
 
 import openpyxl
 from openpyxl.writer.excel import save_virtual_workbook
@@ -51,7 +53,7 @@ class FuseSheetsView(web.View):
 
     async def post(self) -> web.Response:
         data = await self.request.post()
-        file_data = BytesIO(data.get('file').file.read())
-        task_class = await self.task_class.init(self.headers)
+        file_data = FieldStorage(BytesIO(data.get('file').file.read()))
+        task_class = await self.task_class(self.headers)
         await task_class.prepare(file_data, data.get('file').filename)
         return web.Response(status=201)

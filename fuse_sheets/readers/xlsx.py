@@ -4,7 +4,7 @@ from logging import getLogger
 from typing import Tuple, Generator, Any, Union, Awaitable
 
 from fuse_core.handlers.exceptions import ValueValidationError
-from openpyxl.cell import ReadOnlyCell
+from openpyxl.cell import ReadOnlyCell, Cell
 from openpyxl.cell.read_only import EmptyCell
 from openpyxl.reader import excel
 
@@ -57,7 +57,8 @@ class XlsxSheetReader(ISheetReader):
                 field_inst = copy(headers[ri])
                 fuse_dict[field_inst.name] = field_inst
                 try:
-                    if isinstance(row, (ReadOnlyCell, EmptyCell)):
+                    if isinstance(row, (Cell, ReadOnlyCell, EmptyCell)):
+                        # TODO: Write my own excel reader
                         field_inst.validate(row.value)
                         field_inst.set(row.value)
 

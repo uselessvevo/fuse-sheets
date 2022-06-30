@@ -32,6 +32,10 @@ headers = (
         verbose_name='Email',
         validators=[EmailValidator()]
     ),
+    Field(
+        name='date_of_birth',
+        verbose_name='Date of birth'
+    )
 )
 
 

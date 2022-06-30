@@ -3,6 +3,7 @@ from io import BytesIO
 from logging import getLogger
 from typing import Tuple, Generator, Any, Union, Awaitable
 
+from fuse_core.handlers.exceptions import ValueValidationError
 from openpyxl.cell import ReadOnlyCell
 from openpyxl.cell.read_only import EmptyCell
 from openpyxl.reader import excel
@@ -60,8 +61,11 @@ class XlsxSheetReader(ISheetReader):
                         field_inst.validate(row.value)
                         field_inst.set(row.value)
 
-                except Exception as e:
-                    logger.critical(e)
+                except ValueValidationError:
+                    logger.warning(f'Can\'t validate value {row.value}')
+
+                except Exception:
+                    logger.warning('Something went wrong')
 
                 del row
 

@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 class SheetsLogger:
     """
-    Logger that saves logs into json
+    Logger that saves logs into json and database
     """
 
     def __init__(self):
@@ -50,7 +50,7 @@ class SheetsLogger:
                 'state': state.value,
                 'verbose_name': items.field(k, attr='verbose_name')
             })
-            self._logger.warning(comment)
+            logger.warning(comment)
 
         self._logs.append(container)
 

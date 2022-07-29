@@ -7,7 +7,8 @@ from typing import Tuple, Awaitable
 from fuse_core.core.containers import FuseDictionary
 
 from fuse_sheets.logger import SheetsLogger
-from fuse_sheets.readers import XlsbTableReader, OdtTableReader
+from fuse_sheets.readers import OdtTableReader
+from fuse_sheets.readers import XlsbTableReader
 from fuse_sheets.readers import XlsxSheetReader
 from fuse_sheets.exceptions import SheetsFakeError
 from fuse_sheets.exceptions import SheetsInlineError

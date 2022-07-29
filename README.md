@@ -3,6 +3,7 @@
 Requirements:
 * fuse-core
 * openpyxl
+* xlrd
 * aiohttp
 * aioify
 ____

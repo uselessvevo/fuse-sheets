@@ -95,8 +95,7 @@ class FuseSheetsTask:
             self.logger.warning(f'{self.file_name}: {(index + 1) * round(percent_each)}% / 100%')
 
         # State recorder save here
-        # await self.sheets_logger.save(filename=self.file_name)
+        await self.sheets_logger.save(filename=self.file_name)
 
     async def item_handler(self, item: FuseDictionary) -> None:
-        self.logger.warning(item.get_items(full_house=True))
-        # raise NotImplementedError('method `item_handler` must be implemented')
+        raise NotImplementedError('method `item_handler` must be implemented')

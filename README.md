@@ -1,5 +1,5 @@
-FuseSheets
-A powerful sheet API. Part of the fuse-box tools
+# FuseSheets API
+A powerful sheet API. Part of the **fuse-box** tools
 
 Required:
 * fuse-core

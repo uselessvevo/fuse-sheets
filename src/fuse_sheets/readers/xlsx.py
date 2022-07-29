@@ -17,8 +17,7 @@ logger = getLogger(__name__)
 
 class XlsxSheetReader(ISheetReader):
 
-    @staticmethod
-    def read_file(content: Union[str, bytes]) -> Any:
+    def read_file(self, content: Union[str, bytes]) -> Any:
         """
         Read file and, for example, return `openpyxl.Workbook`
         """
@@ -32,18 +31,21 @@ class XlsxSheetReader(ISheetReader):
             data_only=True
         )
 
-    @staticmethod
-    def find_sheet(sheet_data, verbose_names: Tuple[str, ...]) -> Any:
-        """
-        Find needed sheet
-        """
+    def get_max_row(self, workbook) -> int:
+        return workbook.max_row
+
+    def find_sheet(
+        self,
+        sheet_data: bytes,
+        verbose_names: Tuple[str, ...]
+    ) -> Any:
         for sheet in sheet_data:
             for data in sheet.iter_rows(min_row=1, max_row=1):
                 if tuple(i.value for i in data if i.value) == verbose_names:
                     return sheet
 
-    @staticmethod
     def get_fuse_dictionary(
+        self,
         sheet_data: Any,
         headers: Tuple["Field", ...]
     ) -> Union[Awaitable[Generator], Generator]:

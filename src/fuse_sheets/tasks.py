@@ -11,6 +11,7 @@ from fuse_sheets.readers import XlsbTableReader, OdtTableReader
 from fuse_sheets.readers import XlsxSheetReader
 from fuse_sheets.exceptions import SheetsFakeError
 from fuse_sheets.exceptions import SheetsInlineError
+from fuse_sheets.readers.xls import XlsSheetReader
 
 
 class FuseSheetsTask:
@@ -23,6 +24,7 @@ class FuseSheetsTask:
 
     # File readers mapping
     file_readers: dict = {
+        'xls': XlsSheetReader,
         'xlsx': XlsxSheetReader,
         'xlsb': XlsbTableReader,
         'odt': OdtTableReader,
@@ -77,7 +79,7 @@ class FuseSheetsTask:
     async def handle(self) -> None:
         workbook_sheet = await self.prepare_workbook_sheet()
         # temporary until we figure out how to get `max_row` from other file formats
-        percent_each = 100 / workbook_sheet.max_row
+        percent_each = 100 / self.reader.get_max_row(workbook_sheet)
 
         for index, item in enumerate(await self.iter_sheets(workbook_sheet)):
             try:
@@ -96,5 +98,5 @@ class FuseSheetsTask:
         # await self.sheets_logger.save(filename=self.file_name)
 
     async def item_handler(self, item: FuseDictionary) -> None:
-        self.logger.info(item)
+        self.logger.warning(item.get_items(full_house=True))
         # raise NotImplementedError('method `item_handler` must be implemented')

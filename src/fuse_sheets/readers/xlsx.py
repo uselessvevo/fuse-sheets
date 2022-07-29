@@ -3,13 +3,13 @@ from io import BytesIO
 from logging import getLogger
 from typing import Tuple, Generator, Any, Union, Awaitable
 
-from fuse_core.handlers.exceptions import ValueValidationError
+from fuse_core.core.exceptions import ValueValidationError
 from openpyxl.cell import ReadOnlyCell, Cell
 from openpyxl.cell.read_only import EmptyCell
 from openpyxl.reader import excel
 
-from .base import ISheetReader
-from fuse_core.handlers.containers import FuseDictionary
+from fuse_sheets.readers.abc import ISheetReader
+from fuse_core.core.containers import FuseDictionary
 
 
 logger = getLogger(__name__)

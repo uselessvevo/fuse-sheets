@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 from collections import OrderedDict
 
-from .enums import SheetsLoggerEnum
+from fuse_sheets.enums import SheetsLoggerEnum
 
 
 logger = logging.getLogger(__name__)

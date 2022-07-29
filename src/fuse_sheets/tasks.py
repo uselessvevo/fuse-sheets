@@ -4,13 +4,13 @@ import logging
 from aioify import aioify
 from typing import Tuple, Awaitable
 
-from fuse_core.handlers.containers import FuseDictionary
+from fuse_core.core.containers import FuseDictionary
 
-from .logger import SheetsLogger
-from .readers import XLSBTableReader
-from .readers import XlsxSheetReader
-from .exceptions import SheetsFakeError
-from .exceptions import SheetsInlineError
+from fuse_sheets.logger import SheetsLogger
+from fuse_sheets.readers import XlsbTableReader, OdtTableReader
+from fuse_sheets.readers import XlsxSheetReader
+from fuse_sheets.exceptions import SheetsFakeError
+from fuse_sheets.exceptions import SheetsInlineError
 
 
 class FuseSheetsTask:
@@ -24,7 +24,8 @@ class FuseSheetsTask:
     # File readers mapping
     file_readers: dict = {
         'xlsx': XlsxSheetReader,
-        'xlsb': XLSBTableReader,
+        'xlsb': XlsbTableReader,
+        'odt': OdtTableReader,
     }
 
     exceptions: Tuple[Exception] = (
@@ -92,7 +93,8 @@ class FuseSheetsTask:
             self.logger.warning(f'{self.file_name}: {(index + 1) * round(percent_each)}% / 100%')
 
         # State recorder save here
-        await self.sheets_logger.save(filename=self.file_name)
+        # await self.sheets_logger.save(filename=self.file_name)
 
     async def item_handler(self, item: FuseDictionary) -> None:
-        raise NotImplementedError('method `item_handler` must be implemented')
+        self.logger.info(item)
+        # raise NotImplementedError('method `item_handler` must be implemented')

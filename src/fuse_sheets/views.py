@@ -10,7 +10,7 @@ from cgi import FieldStorage
 import openpyxl
 from openpyxl.writer.excel import save_virtual_workbook
 
-from fuse_core.handlers.fields import Field
+from fuse_core.core.fields import Field
 
 from aiohttp import web
 from aioify import aioify

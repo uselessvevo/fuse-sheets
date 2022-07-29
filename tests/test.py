@@ -2,9 +2,8 @@ import asyncio
 
 from fuse_core.orm.validators import EmailValidator
 
-from fuse_sheets.tasks import FuseSheetsTask
-from fuse_core.handlers.fields import Field, IntegerField
-
+from src.fuse_sheets.tasks import FuseSheetsTask
+from fuse_core.core.fields import Field, IntegerField
 
 headers = (
     Field(

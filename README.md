@@ -1,11 +1,11 @@
-# Fuse Sheets API
+FuseSheets
+A powerful sheet API. Part of the fuse-box tools
 
-Requirements:
+Required:
 * fuse-core
-* openpyxl
-* xlrd
-* aiohttp
-* aioify
-____
+
+_________
+# Q&A
+
 * Q: How to install?
-* A: First, you need to install `poetry` and then to type command: `poetry install`
+* A: First, you need to install poetry and then to type command: poetry install

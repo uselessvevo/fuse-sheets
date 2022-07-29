@@ -5,6 +5,7 @@ from fuse_core.orm.validators import EmailValidator
 from src.fuse_sheets.tasks import FuseSheetsTask
 from fuse_core.core.fields import Field, IntegerField
 
+
 headers = (
     Field(
         name='firstname',
@@ -38,23 +39,31 @@ headers = (
 )
 
 
-async def main():
+async def single_main():
     task = FuseSheetsTask(headers)
-    await task.prepare('test.xlsx')
+    await task.prepare('test.xls')
     await task.handle()
 
-    # await asyncio.gather(
-    #     *[task.handle() for _ in range(100)],
-    # )
 
-    # await asyncio.gather(
-    #     task.handle(),
-    #     task.handle(),
-    #     task.handle(),
-    #     task.handle(),
-    #     task.handle(),
-    #     task.handle(),
-    # )
+async def hundred_runs():
+    task = FuseSheetsTask(headers)
+    await task.prepare('test.xlsx')
+    await asyncio.gather(
+        *[task.handle() for _ in range(100)],
+    )
 
 
-asyncio.run(main())
+async def gather_runs():
+    task = FuseSheetsTask(headers)
+    await task.prepare('test.xlsx')
+    await asyncio.gather(
+        task.handle(),
+        task.handle(),
+        task.handle(),
+        task.handle(),
+        task.handle(),
+        task.handle(),
+    )
+
+
+asyncio.run(single_main())

@@ -60,7 +60,7 @@ class FuseSheetsTask:
         self.file_format = file_name.split('.')[-1]
 
         try:
-            self.reader = self.file_readers[self.file_format]()
+            self.reader = self.file_readers[self.file_format](self.logger)
         except KeyError:
             raise ValueError(f'can\'t handle {self.file_format} file format (file reader not found)')
 

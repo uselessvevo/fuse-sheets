@@ -1,16 +1,12 @@
 from copy import copy
-from logging import getLogger
 from typing import Tuple, Generator, Any, Union, Awaitable
 
 import xlrd
 from xlrd.sheet import Cell
 
-from fuse_core.core.exceptions import ValueValidationError
 from fuse_sheets.readers.abc import ISheetReader
 from fuse_core.core.containers import FuseDictionary
-
-
-logger = getLogger(__name__)
+from fuse_core.core.exceptions import ValueValidationError
 
 
 class XlsSheetReader(ISheetReader):
@@ -55,10 +51,10 @@ class XlsSheetReader(ISheetReader):
                             field_inst.set(row.value)
 
                     except ValueValidationError:
-                        logger.warning(f'Can\'t validate value {row.value}')
+                        self._logger.warning(f'Can\'t validate value {row.value}')
 
                     except Exception:
-                        logger.warning('Something went wrong')
+                        self._logger.warning('Something went wrong')
 
                     del row
 

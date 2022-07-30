@@ -1,18 +1,14 @@
 from copy import copy
 from io import BytesIO
-from logging import getLogger
 from typing import Tuple, Generator, Any, Union, Awaitable
 
-from fuse_core.core.exceptions import ValueValidationError
 from openpyxl.cell import ReadOnlyCell, Cell
 from openpyxl.cell.read_only import EmptyCell
 from openpyxl.reader import excel
 
 from fuse_sheets.readers.abc import ISheetReader
 from fuse_core.core.containers import FuseDictionary
-
-
-logger = getLogger(__name__)
+from fuse_core.core.exceptions import ValueValidationError
 
 
 class XlsxSheetReader(ISheetReader):
@@ -60,15 +56,14 @@ class XlsxSheetReader(ISheetReader):
                 fuse_dict[field_inst.name] = field_inst
                 try:
                     if isinstance(row, (Cell, ReadOnlyCell, EmptyCell)):
-                        # TODO: Write my own excel reader
                         field_inst.validate(row.value)
                         field_inst.set(row.value)
 
                 except ValueValidationError:
-                    logger.warning(f'Can\'t validate value {row.value}')
+                    self._logger.warning(f'Can\'t validate value {row.value}')
 
                 except Exception:
-                    logger.warning('Something went wrong')
+                    self._logger.warning('Something went wrong')
 
                 del row
 

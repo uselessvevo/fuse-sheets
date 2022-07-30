@@ -6,6 +6,9 @@ from typing import Tuple, Union, Generator, Awaitable, Any
 
 class ISheetReader:
 
+    def __init__(self, parent_logger) -> None:
+        self._logger = parent_logger
+
     @abc.abstractmethod
     def read_file(self, content: Union[str, bytes]) -> Any:
         """

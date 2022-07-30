@@ -1,21 +1,18 @@
 from __future__ import annotations
 
-import logging
 from collections import OrderedDict
 
 from fuse_sheets.enums import SheetsLoggerEnum
 
 
-logger = logging.getLogger(__name__)
-
-
-class SheetsLogger:
+class BaseSheetsLogger:
     """
     Logger that saves logs into json and database
     """
 
-    def __init__(self):
+    def __init__(self, parent_logger=None):
         self._logs = []
+        self._logger = parent_logger
 
     async def info(self, *keys, items: object = None, comment: str = None):
         await self.record(*keys, comment=comment, items=items, state=SheetsLoggerEnum.INFO)
@@ -50,7 +47,7 @@ class SheetsLogger:
                 'state': state.value,
                 'verbose_name': items.field(k, attr='verbose_name')
             })
-            logger.warning(comment)
+            self._logger.warning(comment)
 
         self._logs.append(container)
 

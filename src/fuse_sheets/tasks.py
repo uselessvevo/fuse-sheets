@@ -6,7 +6,7 @@ from typing import Tuple, Awaitable
 
 from fuse_core.core.containers import FuseDictionary
 
-from fuse_sheets.logger import SheetsLogger
+from fuse_sheets.logger import BaseSheetsLogger
 from fuse_sheets.readers import OdtTableReader
 from fuse_sheets.readers import XlsbTableReader
 from fuse_sheets.readers import XlsxSheetReader
@@ -38,6 +38,8 @@ class FuseSheetsTask:
         AttributeError,
     )
 
+    sheets_logger: BaseSheetsLogger = BaseSheetsLogger
+
     def __init__(self, headers: Tuple["Field", ...]) -> None:
         self.file_name = None
         self.file_format = None
@@ -47,7 +49,7 @@ class FuseSheetsTask:
 
         # Logger
         self.logger: "Logger" = logging.getLogger(self.__class__.__name__)
-        self.sheets_logger: SheetsLogger = SheetsLogger()
+        self.sheets_logger = self.sheets_logger(self.logger)
 
     @aioify
     def prepare(self, file_name: str) -> None:

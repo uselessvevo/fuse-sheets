@@ -123,7 +123,7 @@ python-dateutil = "^2.8.2"
 type = "git"
 url = "https://github.com/uselessvevo/fuse-core.git"
 reference = "main"
-resolved_reference = "86f6946f5e5f614ed986b0ec9c66251cd0f2a057"
+resolved_reference = "6cff5dcbdded6cdfa2a78e3a2cdd623ae88ee202"
 
 [[package]]
 name = "idna"

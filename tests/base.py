@@ -1,5 +1,6 @@
-from fuse_core.core.fields import *
-from fuse_core.orm.validators import *
+from fuse_core import Field, IntegerField
+from fuse_core import EmailValidator
+
 
 from fuse_sheets import BaseSheetsLogger
 

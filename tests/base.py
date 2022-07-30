@@ -1,4 +1,4 @@
-from fuse_core import Field, IntegerField
+from fuse_core import Field, IntegerField, DateField
 from fuse_core import EmailValidator
 
 
@@ -30,7 +30,7 @@ HEADERS = (
         verbose_name='Email',
         validators=[EmailValidator()]
     ),
-    Field(
+    DateField(
         name='date_of_birth',
         verbose_name='Date of birth'
     )

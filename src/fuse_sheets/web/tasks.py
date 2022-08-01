@@ -4,15 +4,15 @@ import logging
 from aioify import aioify
 from typing import Tuple, Awaitable
 
-from fuse_core.core.containers import FuseDictionary
+from fuse_core.core.containers import FieldDictionary
 
-from fuse_sheets.logger import BaseSheetsLogger
-from fuse_sheets.readers import OdtTableReader
-from fuse_sheets.readers import XlsbTableReader
-from fuse_sheets.readers import XlsxSheetReader
-from fuse_sheets.exceptions import SheetsFakeError
-from fuse_sheets.exceptions import SheetsInlineError
-from fuse_sheets.readers.xls import XlsSheetReader
+from fuse_sheets.web.logger import BaseSheetsLogger
+from fuse_sheets.core.readers import OdtTableReader
+from fuse_sheets.core.readers import XlsbTableReader
+from fuse_sheets.core.readers import XlsxSheetReader
+from fuse_sheets.web.exceptions import SheetsFakeError
+from fuse_sheets.web.exceptions import SheetsInlineError
+from fuse_sheets.core.readers.xls import XlsSheetReader
 
 
 class FuseSheetsTask:
@@ -100,5 +100,5 @@ class FuseSheetsTask:
         # State recorder save here
         await self.sheets_logger.save(filename=self.file_name)
 
-    async def item_handler(self, item: FuseDictionary) -> None:
+    async def item_handler(self, item: FieldDictionary) -> None:
         raise NotImplementedError('method `item_handler` must be implemented')

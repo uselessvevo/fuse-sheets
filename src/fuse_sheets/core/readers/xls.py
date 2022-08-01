@@ -4,8 +4,8 @@ from typing import Tuple, Generator, Any, Union, Awaitable
 import xlrd
 from xlrd.sheet import Cell
 
-from fuse_sheets.readers.abc import ISheetReader
-from fuse_core.core.containers import FuseDictionary
+from fuse_sheets.core.readers.abc import ISheetReader
+from fuse_core.core.containers import FieldDictionary
 from fuse_core.core.exceptions import ValueValidationError
 
 
@@ -38,7 +38,7 @@ class XlsSheetReader(ISheetReader):
         """
         Convert any data to `FuseDictionary` and yield it
         """
-        fuse_dict = FuseDictionary()
+        fuse_dict = FieldDictionary()
 
         try:
             for ci in range(self.get_max_row(sheet_data)):

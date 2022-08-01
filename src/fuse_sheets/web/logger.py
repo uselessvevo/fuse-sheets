@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from collections import OrderedDict
 
-from fuse_sheets.enums import SheetsLoggerEnum
+from fuse_sheets.web.enums import SheetsLoggerEnum
 
 
 class BaseSheetsLogger:

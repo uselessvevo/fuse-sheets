@@ -6,8 +6,8 @@ from openpyxl.cell import ReadOnlyCell, Cell
 from openpyxl.cell.read_only import EmptyCell
 from openpyxl.reader import excel
 
-from fuse_sheets.readers.abc import ISheetReader
-from fuse_core.core.containers import FuseDictionary
+from fuse_sheets.core.readers.abc import ISheetReader
+from fuse_core.core.containers import FieldDictionary
 from fuse_core.core.exceptions import ValueValidationError
 
 
@@ -49,7 +49,7 @@ class XlsxSheetReader(ISheetReader):
         Convert any data to `FuseDictionary` and yield it
         """
         for col in sheet_data.iter_rows(2, max_col=len(headers)):
-            fuse_dict = FuseDictionary()
+            fuse_dict = FieldDictionary()
 
             for ri, row in enumerate(col):
                 field_inst = copy(headers[ri])

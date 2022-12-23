@@ -1,8 +1,8 @@
-# FuseSheets API
-A powerful sheet API. Part of the **fuse-box** tools
+# Fuse Sheets
+Minimalistic web app for excel files upload. 
 
 Required:
-* fuse-core
+* fuse-box
 
 _________
 # Q&A
